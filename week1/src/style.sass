@@ -2,10 +2,12 @@
 @use 'vars'
 
 // ------ Debug ------ // 
-#content
-  border: 1px solid #000
-  .container>*
-    border: 1px solid #000
+// #content
+  // border: 1px solid #000
+  // .container>*
+  //   border: 1px solid #000
+  // .block.rect>*
+  //   border: 1px solid #000
 
   
 
@@ -34,6 +36,7 @@ html
       margin-right: 20px
       &:last-child
         margin-right: 0px
+// ------------------- //
 #header
   .container
     +vars.center
@@ -41,18 +44,42 @@ html
     background-color: vars.$color_blue
   p
     font-size: 2rem
-
+// ------------------- //
 #content
   width: min(1200px, 90%)
-  height: 100px
   margin: 0 auto
+  margin-top: 30px
+  font-size: 0
+  .container
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
 .block
-  margin: 20px //＊要怎麼樣實現彼此中間都固定為 20px 的間隔？能夠用 flex 達成嗎？
-.rect
+  background-color: vars.$color_blue
+  margin-bottom: 20px
+  width: calc( (100% - 5 * 20px) / 6 )
+  border: 1px solid #999
+  img
+    width: 100%
+    object-fit: cover
+  .text
+    font-size: 1rem
+    text-align: center
+    padding: 15px
+.block:is(.rect)
+  width: calc( (100% - 2 * 20px) / 3 )
   height: 50px
-  margin-top: 0
+  &>*
+    display: inline-block
+    vertical-align: middle
   img
     width: 80px
+    height: 100%
+    margin-right: 10px
+
+  .text
+    padding: 0px
+
   
   
     
