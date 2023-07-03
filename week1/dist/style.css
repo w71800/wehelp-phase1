@@ -1,0 +1,71 @@
+@media screen and (min-width: 1200px) {
+  h1 {
+    color: green;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  h1 {
+    color: grey;
+  }
+}
+#content {
+  border: 1px solid #000;
+}
+#content .container > * {
+  border: 1px solid #000;
+}
+
+* {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+}
+
+#nav .container {
+  display: flex;
+  justify-content: space-between;
+}
+#nav > * {
+  padding: 8px 10px;
+}
+#nav .items * {
+  display: inline-block;
+  margin-right: 20px;
+}
+#nav .items *:last-child {
+  margin-right: 0px;
+}
+
+#header .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  background-color: #D9EFF9;
+}
+#header p {
+  font-size: 2rem;
+}
+
+#content {
+  width: min(1200px, 90%);
+  height: 100px;
+  margin: 0 auto;
+}
+
+.block {
+  margin: 20px;
+}
+
+.rect {
+  height: 50px;
+  margin-top: 0;
+}
+.rect img {
+  width: 80px;
+}
