@@ -1,18 +1,17 @@
 @use 'rwd'
 @use 'vars'
 
-// ------ Debug ------ // 
-// #content
-  // border: 1px solid #000
-  // .container>*
-  //   border: 1px solid #000
-  // .block.rect>*
-  //   border: 1px solid #000
+// ------------ Debug ------------ // 
+#nav
+  .icon, .items
+    // display: none
+  .wrap
+    // border: 1px solid #000
 
   
 
 
-// ------ Reset ------ // 
+// ------------ Reset ------------ // 
 *
   position: relative
   padding: 0
@@ -21,21 +20,37 @@
 html
   font-size: 20px
 
-// ------ Base ------ //
+// ------------ Base ------------ //
 #nav
   .container
     display: flex
     justify-content: space-between
+    align-items: center
   &>*
     // border: 1px solid #000
     padding: 8px 10px
   .items
+    transition: .5s
+    background-color: #fff
     *
-      // border: 1px solid #000
       display: inline-block
       margin-right: 20px
       &:last-child
         margin-right: 0px
+  .hamberger
+    display: none
+    cursor: pointer
+  .wrap
+    +vars.center
+    flex-direction: column
+    .line
+      width: 25px
+      height: 3px
+      background-color: #999
+      transition: .3s
+      &:nth-child(2)
+        margin: 4px 0px
+        
 // ------------------- //
 #header
   .container
@@ -57,7 +72,7 @@ html
 .block
   background-color: vars.$color_blue
   margin-bottom: 20px
-  width: calc( (100% - 5 * 20px) / 6 )
+  +vars.setBlockNums(6)
   border: 1px solid #999
   img
     width: 100%
@@ -67,7 +82,7 @@ html
     text-align: center
     padding: 15px
 .block:is(.rect)
-  width: calc( (100% - 2 * 20px) / 3 )
+  +vars.setBlockNums(3)
   height: 50px
   &>*
     display: inline-block
@@ -75,13 +90,27 @@ html
   img
     width: 80px
     height: 100%
-    margin-right: 10px
-
+    margin-right: 15px
   .text
     padding: 0px
 
-  
-  
-    
-
-
+// ------------ Function ------------ //
+#nav
+  .container
+    .hamberger
+      &.active
+        .wrap
+          .line:nth-child(2)
+            opacity: 0
+            margin: 0
+          .line:nth-child(2n-1)
+            transform-origin: 50% 50%
+          .line:nth-child(1)
+            transform: translateY(3px) rotate(45deg)
+          .line:nth-child(3)
+            transform: translateY(-3px) rotate(-45deg)
+    .items
+      &.showItems
+        height: initial
+        padding: 20px 30px
+        opacity: 1
