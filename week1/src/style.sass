@@ -2,11 +2,9 @@
 @use 'vars'
 
 // ------------ Debug ------------ // 
-#nav
-  .icon, .items
-    // display: none
-  .wrap
-    // border: 1px solid #000
+// #sidebar
+//   >*
+//     border: 1px solid #000
 
 
 // ------------ Reset ------------ // 
@@ -19,7 +17,43 @@ html
   font-size: 20px
 
 // ------------ Base ------------ //
+#sidebar
+  z-index: 10
+  position: absolute
+  right: 0
+  background-color: white
+  box-shadow: -1px 0px 20px 1px
+  transition: .4s
+  transform: translateX(120%)
+  transition-timing-function: ease-in-out
+  .container
+    width: 50vw
+    height: 100vh
+  .items
+    display: grid
+    height: 100%
+    grid-template-rows: repeat(5, 10%)
+    grid-template-columns: 50% 50%
+  .item
+    grid-column: 1 / 3
+    display: flex
+    +vars.center
+    &:nth-child(1)
+      grid-row: 1 / 2
+    &:nth-child(2)
+      grid-row: 2 / 3
+    &:nth-child(3)
+      grid-row: 3 / 4
+    &:nth-child(4)
+      grid-row: 4 / 5
+      
+
+
+    
+
+// ------------------- //
 #nav
+  z-index: 100
   .container
     display: flex
     justify-content: space-between
@@ -69,29 +103,52 @@ html
 .block
   background-color: vars.$color_blue
   margin-bottom: 20px
-  +vars.setBlockNums(6)
   border: 1px solid #999
+  font-size: 1rem
   img
-    width: 100%
     object-fit: cover
-  .text
-    font-size: 1rem
-    text-align: center
-    padding: 15px
+  .text_wrapper
+    background-color: vars.$color_blue
+// settings of different block types
 .block:is(.rect)
   +vars.setBlockNums(3)
+  +vars.center
+  justify-content: flex-start
   height: 50px
-  &>*
-    display: inline-block
-    vertical-align: middle
   img
     width: 80px
     height: 100%
-    margin-right: 15px
   .text
-    padding: 0px
+    padding-left: 1rem
+.block:not(.rect)
+  +vars.setBlockNums(6)
+  img
+    width: 100%
+    height: 100%
+  .text_wrapper
+    position: absolute
+    width: 100%
+    bottom: 0
+    opacity: 0.8
+  .text
+    z-index: 20
+    font-size: 1rem
+    text-align: center
+    padding: 15px
+  &::before
+    content: "★"
+    display: block
+    position: absolute
+    z-index: 2
+    top: 5px
+    right: 5px
+    color: vars.$color_star
+
 
 // ------------ Function ------------ //
+#sidebar
+  &.in
+    transform: translateX(0%)
 #nav
   .container
     .hamberger

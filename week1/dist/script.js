@@ -1,7 +1,7 @@
 const hamberger = document.querySelector(".hamberger")
-const items = document.querySelector(".items")
+const sidebar = document.querySelector("#sidebar")
 
 hamberger.addEventListener('click', ()=>{
-  items.classList.toggle("showItems")
   hamberger.classList.toggle("active")
+  sidebar.classList.toggle("in")
 })
