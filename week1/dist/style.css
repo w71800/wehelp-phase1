@@ -11,6 +11,12 @@
   }
 }
 @media screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+  body #sidebar {
+    display: block;
+  }
   body #nav .items {
     overflow: hidden;
     position: absolute;
@@ -51,8 +57,10 @@ html {
   background-color: white;
   box-shadow: -1px 0px 20px 1px;
   transition: 0.4s;
+  transition-delay: 0s;
   transform: translateX(120%);
   transition-timing-function: ease-in-out;
+  display: none;
 }
 #sidebar .container {
   width: 50vw;
