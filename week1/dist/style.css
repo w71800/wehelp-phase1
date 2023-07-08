@@ -11,12 +11,6 @@
   }
 }
 @media screen and (max-width: 600px) {
-  body {
-    overflow-x: hidden;
-  }
-  body #sidebar {
-    display: block;
-  }
   body #nav .items {
     overflow: hidden;
     position: absolute;
@@ -217,6 +211,9 @@ html {
 
 #sidebar.in {
   transform: translateX(0%);
+}
+#sidebar.appear {
+  display: block;
 }
 
 #nav .container .hamberger.active .wrap .line:nth-child(2) {
