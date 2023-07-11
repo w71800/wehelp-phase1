@@ -81,8 +81,8 @@ const result = calculateSumOfBonus({
 }); // call calculateSumOfBonus function
 
 // test in node
-module.exports = result
+// module.exports = result
 
-// export default result
+export default result
   
   

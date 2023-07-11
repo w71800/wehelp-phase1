@@ -39,6 +39,6 @@ function func(...data) {
 var result1 = func("彭大牆", "王明雅", "吳明")
 var result2 = func("郭靜雅", "王立強", "林靜宜", "郭立恆", "林花花", "中小小")
 // node test
-module.exports = { result1, result2 }
+// module.exports = { result1, result2 }
 
-// export default { result1, result2 }
+export default { result1, result2 }

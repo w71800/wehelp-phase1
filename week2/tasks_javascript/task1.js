@@ -34,6 +34,7 @@ const result = findAndPrint({
   "Jenny": "Good morning."
 });
 
-// export default result
+export default result
+
 // test in node
-module.exports  = result
+// module.exports  = result
