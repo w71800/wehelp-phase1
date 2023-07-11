@@ -14,6 +14,5 @@ ${task3.result1} 和 ${task3.result2} 不重複中間字，但 result3 ${task3.r
 輸入 1 的結果：${task4.resultOf_1}、輸入 5 的結果：${task4.resultOf_5}、輸入 10 的結果：${task4.resultOf_10}
 ======== task5 ========
 訂位結果：${task5}（如未訂到則顯示 -1）
-
 // `
 console.log(logMsg);
