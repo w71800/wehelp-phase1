@@ -43,7 +43,7 @@ def calculate_sum_of_bonus(data):
   
   for item in items:
     sum += item["bonus"]
-  return sum
+  return int(sum)
 
 
 result = calculate_sum_of_bonus({

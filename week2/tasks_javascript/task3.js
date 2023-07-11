@@ -37,8 +37,9 @@ function func(...data) {
 }
 
 var result1 = func("彭大牆", "王明雅", "吳明")
-var result2 = func("郭靜雅", "王立強", "林靜宜", "郭立恆", "林花花", "中小小")
+var result2 = func("郭靜雅", "王立強", "林靜宜", "郭立恆", "林花花")
+var result3 = func("郭宣雅", "林靜宜", "郭宣恆", "林靜花")
 // node test
 // module.exports = { result1, result2 }
 
-export default { result1, result2 }
+export default { result1, result2, result3 }

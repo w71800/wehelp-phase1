@@ -15,5 +15,6 @@ def get_number(index):
   
 
 
-# result = get_number(5) # print 10 get_number(10) # print 15
-result = get_number(10) # print 10 get_number(10) # print 15
+result = get_number(1) # print 4
+# result = get_number(5) # print 10
+# result = get_number(10) # print 15

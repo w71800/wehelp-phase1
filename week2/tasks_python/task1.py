@@ -20,7 +20,7 @@ def find_and_print(messages):
       if word in item["msg"]:
         results.append(item["name"])
 
-  return results
+  return ", ".join(results)
     
 
 # keywords 18, college, legal age, will vote
