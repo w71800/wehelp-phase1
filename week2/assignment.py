@@ -1,5 +1,5 @@
 import sys
-sys.path.append("tasks_py")
+sys.path.append("tasks_python")
 
 import task1 as t1
 import task2 as t2
