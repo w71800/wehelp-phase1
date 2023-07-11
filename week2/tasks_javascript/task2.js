@@ -16,11 +16,11 @@ function salaryEnhance(data) {
 }
 
 function calculateSumOfBonus(data) {
-  var items = salaryEnhance(data).employees
-  var sum = 0;
+  let items = salaryEnhance(data).employees
+  let sum = 0;
 
   // 處理職位
-  for (var item of items) {
+  for (let item of items) {
     let { role, salary } = item
     item.bonus = 0
 
@@ -36,7 +36,7 @@ function calculateSumOfBonus(data) {
   }
 
   // 處理表現
-  for (var item of items) {
+  for (let item of items) {
     let { performance, bonus } = item
 
     if (performance.includes("above")) {
@@ -50,7 +50,7 @@ function calculateSumOfBonus(data) {
     item.bonus = bonus;
   }
 
-  for (var item of items) {
+  for (let item of items) {
     sum += item.bonus;
   }
 
