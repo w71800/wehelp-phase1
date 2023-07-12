@@ -2,6 +2,8 @@ def salaryEnhance(data):
   items = data["employees"]
   # 處理薪水
   for item in items:
+    if type(item["salary"]) == int:
+      item["salary"] = str(item["salary"])
     if "USD" in item["salary"]:
       item["salary"] = int(item["salary"].replace("USD", "")) * 30
     elif "," in item["salary"]:
@@ -56,7 +58,7 @@ result = calculate_sum_of_bonus({
     },
     {
       "name": "Bob",
-      "salary": "60000",
+      "salary": 60000,
       "performance": "average",
       "role": "CEO"
     },

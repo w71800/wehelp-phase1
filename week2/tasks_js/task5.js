@@ -5,19 +5,19 @@ function findIndexOfCar(seats, status, number) {
     let info = {}
     info.seats = seat
     info.available = status[i] === 1 ? true : false
+    info.index = i
     seatInfos.push(info)
   }
 
-  // 開始遍歷
-  let r = null
-  for (let [i, info] of seatInfos.entries()) {
-    if (info.available === true && info.seats >= number) {
-      r = i + 1
-      return `已為您訂到第 ${r} 號車廂的 ${number} 個位子`
-    }
+  // 開始處理合乎資格的車廂資訊（找 seats 最少的）
+  let candidates = []
+  candidates = seatInfos.filter( info => info.available && info.seats >= number )
+  candidates.sort( (c1, c2) => c1.seats - c2.seats )
+  if(candidates.length > 0){
+    return `您訂到了 ${candidates[0].index} 號車廂的 ${number} 個座位`
+  }else{
+    return `${-1}（很遺憾，目前無符合您需求的車廂）`
   }
-
-  return -1
 }
 
 const result = findIndexOfCar([3, 1, 5, 4, 2], [0, 1, 0, 1, 1], 2) // print 4

@@ -1,5 +1,5 @@
 import sys
-sys.path.append("tasks_python")
+sys.path.append("tasks_py")
 
 import task1 as t1
 import task2 as t2
@@ -9,5 +9,5 @@ import task5 as t5
 
 ## 所有答案都存於 result 的 key 中
 
-print(t4.result)
+print(t1.result)
 

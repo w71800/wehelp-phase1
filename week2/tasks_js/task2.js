@@ -2,8 +2,11 @@ function salaryEnhance(data) {
   let items = data.employees
 
   for(let item of items){
-    // 直接更動 item.salary 會直接更動到 data（因為傳址的關係）
-    if (item["salary"].includes("USD")) {
+    // 統一型別為 string
+    if(typeof(item.salary) == "number"){
+      item.salary = item.salary + ""
+    }
+    if (item.salary.includes("USD")) {
       item.salary = parseInt(item["salary"].replace("USD", "")) * 30
     } else if (item.salary.includes(",")) {
       item.salary = parseInt(item["salary"].replace(",", ""))
@@ -68,7 +71,7 @@ const result = calculateSumOfBonus({
   },
   {
     "name":"Bob",
-    "salary": "60000",
+    "salary": 60000,
     "performance":"average",
     "role":"CEO"
   },
