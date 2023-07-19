@@ -1,0 +1,11 @@
+$color_blue: #D9EFF9
+$color_star: #C5BC00
+
+@mixin center()
+  display: flex
+  align-items: center
+  justify-content: center
+
+@mixin setBlockNums($num, $gap: 20px)
+  width: calc( (100% - (#{$num} - 1) * #{$gap}) / #{$num} )
+  

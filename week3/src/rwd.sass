@@ -1,0 +1,35 @@
+@use 'vars'
+
+
+// behavior of 600~1200px
+@media screen and (min-width: 600px) and (max-width: 1199px)
+  #content
+    .block
+      +vars.setBlockNums(4)
+    .block:is(.rect)
+      +vars.setBlockNums(2)
+      &:nth-child(3)
+        +vars.setBlockNums(1)
+
+// behavior of below 600
+@media screen and (max-width: 600px)
+  body
+    #nav
+      .items
+        overflow: hidden
+        position: absolute
+        opacity: 0
+        display: flex
+        flex-direction: column
+        right: 0
+        top: 30px
+        height: 0
+        z-index: 100
+        padding: 0 30px
+        .item
+          margin: 10px 0px
+      .hamberger
+        display: block
+    #content
+      .block
+        +vars.setBlockNums(1)
