@@ -35,4 +35,4 @@ with request.urlopen(src, context = context) as res:
     # 寫入資料
     for key, value in rawDatas.items():
       value = ', '.join(value)
-      file.write(f"{key}: {value}\n" )
+      file.write(f"{key}, {value}\n" )
