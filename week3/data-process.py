@@ -12,36 +12,30 @@ with request.urlopen(src, context = context) as res:
   with open("attraction.csv", mode="w", encoding="utf-8") as file:
     for data in datas:
       title = data["stitle"]
-      position = data["address"][5:8]
+      position = data["address"][5:8] # 有沒有更加優雅的處理方法？
       long = data["longitude"]
       lat = data["latitude"]
       imgUrl = re.search(r"https?://\S+?[jJ][pP][eE]?[gG]", data["file"]).group(0)
       file.write(f"{title}, {position}, {long}, {lat}, {imgUrl}\n")
   with open("mrt.csv", mode="w", encoding="utf-8") as file:
-    # 整理資料，建立一個空 Dict
-    rawDatas = {
-    }
+    # 整理資料
+    rawDatas = {}
     for data in datas:
-      if data["MRT"] == None:
+      MRT = data["MRT"]
+      if MRT == None:
         continue
+      elif MRT not in rawDatas:
+        rawDatas[MRT] = []
+        rawDatas[MRT].append(data["stitle"])
       else:
-          rawDatas[data["MRT"]] = []
-    else:
-      print(rawDatas)
-
-    # 開始把景點放入
-    for data in datas:
-      if data["MRT"] == None:
-        continue
-      else:
-        rawDatas[data["MRT"]].append(data["stitle"])
+          rawDatas[MRT].append(data["stitle"])
     else:
       print(rawDatas)
     
     # 寫入資料
     for key, value in rawDatas.items():
       value = ', '.join(value)
-      file.write(f"{key}, {value}\n" )
+      file.write(f"{key}: {value}\n" )
 
 
 

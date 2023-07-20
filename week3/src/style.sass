@@ -124,21 +124,22 @@ html
     padding-left: 1rem
 .block:not(.rect)
   +vars.setBlockNums(6)
+  font-size: 0px
   img
     width: 100%
-    height: 100%
+    height: 70% 
   .text_wrapper
-    position: absolute
-    width: 100%
-    bottom: 0
+    +vars.center
     opacity: 0.8
+    height: 30%
+    padding: 10px 3px
   .text
     z-index: 20
     font-size: 1rem
     text-align: center
-    padding: 15px
   &::before
     content: "★"
+    font-size: 1rem
     display: block
     position: absolute
     z-index: 2

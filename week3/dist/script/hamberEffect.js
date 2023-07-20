@@ -17,3 +17,4 @@ hamberger.addEventListener('click', ()=>{
     }, 500)
   }
 })
+
