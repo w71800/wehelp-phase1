@@ -12,7 +12,7 @@ with request.urlopen(src, context = context) as res:
   with open("attraction.csv", mode="w", encoding="utf-8") as file:
     for data in datas:
       title = data["stitle"]
-      position = data["address"][5:8] # 有沒有更加優雅的處理方法？
+      position = re.search(r"..區", data["address"]).group(0)
       long = data["longitude"]
       lat = data["latitude"]
       imgUrl = re.search(r"https?://\S+?[jJ][pP][eE]?[gG]", data["file"]).group(0)
