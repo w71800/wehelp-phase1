@@ -8,13 +8,25 @@
 <body>
   <div class="header"> 請輸入帳號密碼 </div>
   <div class="title">登入系統</div>
-  <form action="/" method="post" id="signin">
+  <form action="/signin" method="post" id="signin">
     <label for="id">帳號</label>
-    <input type="text" name="id" id="id">
+    <input 
+      type="text" 
+      name="id" 
+      id="id" 
+      value="test">
     <label for="password">密碼</label>
-    <input type="text" name="password" id="password">
+    <input 
+      type="password" 
+      name="password" 
+      id="password" 
+      value="test">
     <label for="agree">同意條款</label>
-    <input type="checkbox" name="agree" id="agree">
+    <input 
+      type="checkbox" 
+      name="agree" 
+      id="agree" 
+      checked>
     <input type="submit" value="登入" > 
   </form>
 </body>
