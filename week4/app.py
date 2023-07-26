@@ -26,7 +26,7 @@ def signIn():
 
 @app.route("/member") 
 def member():
-  SIGNED_IN = session.get("SIGNED-IN")
+  SIGNED_IN = session.get("SIGNED-IN", False)
   if SIGNED_IN:
     return render_template("member.html")
   else:
@@ -39,12 +39,15 @@ def error():
 
 @app.route("/signout") 
 def signout():
-  SIGNED_IN = session.get("SIGNED-IN")
+  SIGNED_IN = session.get("SIGNED-IN", False)
   if SIGNED_IN:
     session.pop("SIGNED-IN")
     return redirect("/")
+  else:
+    message = "未經登入擅闖登出頁面，打五十大板！"
+    return redirect(url_for("error", message = message))
 
-## 正整數的路由
+## 正整數的動態路由
 @app.route("/square/<squared_num>") 
 def square(squared_num):
   print(squared_num)
