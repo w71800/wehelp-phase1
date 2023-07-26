@@ -34,6 +34,7 @@
     </div>
     <input type="submit" value="登入" > 
   </form>
+  <hr>
   <form action="/square" method="post" id="numberForm">
     <div class="title"> 計算正整數的平方 </div>
     <div class="wrapper">
@@ -56,7 +57,6 @@
 
   signinForm.addEventListener("submit", e => {
     let checked = checkbox.checked
-    console.log(checked);
     
     if(!checked){
       e.preventDefault();

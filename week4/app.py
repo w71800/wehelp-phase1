@@ -24,6 +24,7 @@ def signIn():
     errorMsg = "帳號或密碼有誤，請更正"
     return redirect(url_for("error", message = errorMsg))
 
+
 @app.route("/member") 
 def member():
   SIGNED_IN = session.get("SIGNED-IN")
@@ -32,6 +33,11 @@ def member():
   else:
     return redirect("/")
 
+@app.route("/error") 
+def error():
+  errorMsg = request.args.get("message")
+  return render_template("error.html", message = errorMsg)
+
 @app.route("/signout") 
 def signout():
   SIGNED_IN = session.get("SIGNED-IN")
@@ -39,15 +45,7 @@ def signout():
     session.pop("SIGNED-IN")
     return redirect("/")
 
-@app.route("/error") 
-def error():
-  errorMsg = request.args.get("message")
-  return render_template("error.html", message = errorMsg)
-
-@app.route("/square/", methods=["POST"]) 
-def square_post():
-  return "你好"
-
+## 正整數的路由
 @app.route("/square/<squared_num>") 
 def square(squared_num):
   print(squared_num)

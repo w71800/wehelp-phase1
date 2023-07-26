@@ -22,7 +22,6 @@ html, body{
 } */
 
 .container{
-  border: 1px solid #000;
   width: 40vw;
   margin: 0 auto
 }
