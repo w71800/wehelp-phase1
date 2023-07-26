@@ -69,12 +69,24 @@
     e.preventDefault()
     
     v = Number(numberInput.value)
-    console.log(v);
     if(!Number.isInteger(v) || v < 0){
       alert("Please enter a positive number")
     }else{
-      // 沒問題就由前端這裡導向
-      window.location.href = `/square/${v * v}`
+      fetch("/square", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ number: v }),
+      })
+      .then( res => res.json() )
+      .then( data => { 
+        let { result } = data
+        
+        window.location.href = `/square/${result}`
+      })
+      
+      
     }
   })
 
