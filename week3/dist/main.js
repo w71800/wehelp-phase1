@@ -18,6 +18,11 @@ fetch(url)
     dataPool = r
     initialize()
   })
+  .then(() => {
+    setInterval(()=>{
+      loadBtn.classList.remove("hide")
+    },500)
+  })
 
   function initialize() {
     render(15)
@@ -25,9 +30,6 @@ fetch(url)
     for(let i=0; i<3; i++){
       blocks[i].classList.add("rect")
     }
-    setInterval(()=>{
-      loadBtn.classList.remove("hide")
-    },500)
   }
   
   // 根據傳進來的資料物件來製作對應的 block
