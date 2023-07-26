@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SignIn Successed!</title>
+  <title>正整數計算結果</title>
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
-  <div class="header"> 歡迎光臨，這是會員頁 </div>
-  <p> 恭喜您，成功登入系統 </p>
-  <a href="/signout"> 登出系統 </a>
+  <div class="header">正整數平方計算結果</div>
+  <p class="result">{{ result }}</p>
 </body>
 </html>

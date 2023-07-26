@@ -3,45 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>首頁</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
-  <div class="header"> 請輸入帳號密碼 </div>
-  <div class="title">登入系統</div>
+  <div class="header"> 歡迎光臨，請輸入帳號密碼 </div>
+  <div class="container">
+    <div class="title">登入系統</div>
   <form action="/signin" method="post" id="signin">
-    <label for="id">帳號</label>
-    <input 
-      type="text" 
-      name="id" 
-      id="id" 
-      value="test">
-    <label for="password">密碼</label>
-    <input 
-      type="password" 
-      name="password" 
-      id="password" 
-      value="test">
-    <label for="agree">同意條款</label>
-    <input 
-      type="checkbox" 
-      name="agree" 
-      id="agree" 
-      checked>
+    <div class="wrapper">
+      <label for="id">帳號</label>
+      <input 
+        type="text" 
+        name="id" 
+        id="id" >
+      </div>
+    <div class="wrapper">
+      <label for="password">密碼</label>
+      <input 
+        type="password" 
+        name="password" 
+        id="password" >
+    </div>
+    <div class="wrapper">
+      <label for="agree">同意條款</label>
+      <input 
+        type="checkbox" 
+        name="agree" 
+        id="agree" >
+    </div>
     <input type="submit" value="登入" > 
   </form>
+  <form action="/square" method="post" id="numberForm">
+    <div class="title"> 計算正整數的平方 </div>
+    <div class="wrapper">
+      <label for="number">正整數</label>
+      <input 
+        type="text" 
+        id="number"
+        name="number">
+    </div>
+    <button type="submit">計算</button>
+  </form>
+  </div>
+  
 </body>
 <script>
   const checkbox = document.querySelector("#agree")
-  const submit = document.querySelector("[type='submit']")
-  const form = document.querySelector("#signin")
+  const signinForm = document.querySelector("#signin")
+  const numberForm = document.querySelector("#numberForm")
+  let numberInput = document.querySelector("#number")
 
-  form.addEventListener("submit", e => {
+  signinForm.addEventListener("submit", e => {
     let checked = checkbox.checked
     console.log(checked);
     
     if(!checked){
       e.preventDefault();
-      alert("Please check the checkbox first")
+      alert("請先同意條款")
+    }
+  })
+
+  numberForm.addEventListener("submit", e => {
+    // 阻止原先預設的會往 /square 的行為
+    e.preventDefault()
+    
+    v = Number(numberInput.value)
+    console.log(v);
+    if(!Number.isInteger(v) || v < 0){
+      alert("Please enter a positive number")
+    }else{
+      // 沒問題就由前端這裡導向
+      window.location.href = `/square/${v * v}`
     }
   })
 
