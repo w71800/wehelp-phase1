@@ -65,14 +65,14 @@
   })
 
   numberForm.addEventListener("submit", e => {
-    // 阻止原先預設的會往 /square 的行為
-    let form = e.target
-    
     v = Number(numberInput.value)
+    
     if(!Number.isInteger(v) || v < 0){
       alert("Please enter a positive number")
       e.preventDefault()
     }else{
+      let form = e.target
+      
       form.action = `/square/${v}`
       form.submit()
     }
