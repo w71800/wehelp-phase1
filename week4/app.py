@@ -48,15 +48,10 @@ def signout():
     return redirect(url_for("error", message = message))
 
 ## 正整數的動態路由
-
-@app.route("/square", methods=["POST"]) 
-def calculate_square():
-  num = request.get_json()["number"]
-  return { "result": num**2 }
-@app.route("/square/<squared_num>") 
-def square(squared_num):
-  print(squared_num)
-  return render_template("result.html", result = squared_num)
+@app.route("/square/<num>", methods=["POST"]) 
+def square(num):
+  print(num)
+  return render_template("result.html", result = int(num)**2)
 
 
 
