@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首頁</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+  <div class="header"> 歡迎光臨，請輸入帳號密碼 </div>
+  <div class="container">
+    <div class="title">註冊帳號</div>
+  <form action="/signin" method="post" id="signin">
+    <div class="wrapper">
+      <label for="name">姓名</label>
+      <input 
+        type="text" 
+        name="name" 
+        id="name" >
+      </div>
+    <div class="wrapper">
+      <label for="id">帳號</label>
+      <input 
+        type="text" 
+        name="id" 
+        id="id" >
+    </div>
+    <div class="wrapper">
+      <label for="password">密碼</label>
+      <input 
+        type="password" 
+        name="password" 
+        id="password" >
+    </div>
+    <input type="submit" value="註冊" > 
+  </form>
+  <hr>
+  <form action="/signin" method="post" id="numberForm">
+    <div class="title"> 登入系統 </div>
+    <div class="wrapper">
+      <label for="user_id">帳號</label>
+      <input 
+        type="text" 
+        id="user_id"
+        name="user_id">
+    </div>
+    <div class="wrapper">
+      <label for="user_password">密碼</label>
+      <input 
+        type="password" 
+        id="user_password"
+        name="user_password">
+    </div>
+    <input type="submit" value="登入">
+  </form>
+  </div>
+  
+</body>
+<script>
+  const checkbox = document.querySelector("#agree")
+  const signinForm = document.querySelector("#signin")
+  const numberForm = document.querySelector("#numberForm")
+  let numberInput = document.querySelector("#number")
+
+  signinForm.addEventListener("submit", e => {
+    let checked = checkbox.checked
+    
+    if(!checked){
+      e.preventDefault();
+      alert("請先同意條款")
+    }
+  })
+
+  numberForm.addEventListener("submit", e => {
+    v = Number(numberInput.value)
+    
+    if(!Number.isInteger(v) || v < 0){
+      alert("Please enter a positive number")
+      e.preventDefault()
+    }else{
+      let form = e.target
+      
+      form.action = `/square/${v}`
+      form.submit()
+    }
+  })
+
+
+</script>
+</html>
