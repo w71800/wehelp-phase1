@@ -45,14 +45,16 @@
       <input 
         type="text" 
         id="user_id"
-        name="user_id">
+        name="user_id"
+        value="ika">
     </div>
     <div class="wrapper">
       <label for="user_password">密碼</label>
       <input 
         type="password" 
         id="user_password"
-        name="user_password">
+        name="user_password"
+        value="0000">
     </div>
     <input type="submit" value="登入">
   </form>
@@ -61,13 +63,36 @@
 </body>
 <script>
   const signup = document.querySelector("#signup")
-
+  const signin = document.querySelector("#signin")
   signup.addEventListener("submit", e => {
     const submitName = document.querySelector("#name")
     const submitId = document.querySelector("#id")
     const submitPwd = document.querySelector("#password")
     let emptyInputs = []
     let arr = [ submitName, submitId, submitPwd ]
+    arr = arr.map( el => {
+      let { value, id } = el
+
+      return { value, id }
+    })
+    // 處理缺項
+    for(item of arr) {
+      if(item.value == ""){
+        emptyInputs.push(item.id)
+      }
+    }
+    if(emptyInputs.length != 0){
+      alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
+      e.preventDefault()  
+    }
+
+    // e.preventDefault()
+  })
+  signin.addEventListener("submit", e => {
+    const submitId = document.querySelector("#user_id")
+    const submitPwd = document.querySelector("#user_password")
+    let emptyInputs = []
+    let arr = [ submitId, submitPwd ]
     arr = arr.map( el => {
       let { value, id } = el
 
