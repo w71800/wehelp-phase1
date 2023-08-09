@@ -10,32 +10,35 @@
   <div class="header"> 歡迎光臨，請輸入帳號密碼 </div>
   <div class="container">
     <div class="title">註冊帳號</div>
-  <form action="/signin" method="post" id="signin">
+  <form action="/signup" method="post" id="signup">
     <div class="wrapper">
       <label for="name">姓名</label>
       <input 
         type="text" 
         name="name" 
-        id="name" >
+        id="name" 
+        value="IKA">
       </div>
     <div class="wrapper">
       <label for="id">帳號</label>
       <input 
         type="text" 
         name="id" 
-        id="id" >
+        id="id" 
+        value="test">
     </div>
     <div class="wrapper">
       <label for="password">密碼</label>
       <input 
         type="password" 
         name="password" 
-        id="password" >
+        id="password" 
+        value="test">
     </div>
     <input type="submit" value="註冊" > 
   </form>
   <hr>
-  <form action="/signin" method="post" id="numberForm">
+  <form action="/signin" method="post" id="signin">
     <div class="title"> 登入系統 </div>
     <div class="wrapper">
       <label for="user_id">帳號</label>
@@ -57,32 +60,31 @@
   
 </body>
 <script>
-  const checkbox = document.querySelector("#agree")
-  const signinForm = document.querySelector("#signin")
-  const numberForm = document.querySelector("#numberForm")
-  let numberInput = document.querySelector("#number")
+  const signup = document.querySelector("#signup")
 
-  signinForm.addEventListener("submit", e => {
-    let checked = checkbox.checked
-    
-    if(!checked){
-      e.preventDefault();
-      alert("請先同意條款")
-    }
-  })
+  signup.addEventListener("submit", e => {
+    const submitName = document.querySelector("#name")
+    const submitId = document.querySelector("#id")
+    const submitPwd = document.querySelector("#password")
+    let emptyInputs = []
+    let arr = [ submitName, submitId, submitPwd ]
+    arr = arr.map( el => {
+      let { value, id } = el
 
-  numberForm.addEventListener("submit", e => {
-    v = Number(numberInput.value)
-    
-    if(!Number.isInteger(v) || v < 0){
-      alert("Please enter a positive number")
-      e.preventDefault()
-    }else{
-      let form = e.target
-      
-      form.action = `/square/${v}`
-      form.submit()
+      return { value, id }
+    })
+    // 處理缺項
+    for(item of arr) {
+      if(item.value == ""){
+        emptyInputs.push(item.id)
+      }
     }
+    if(emptyInputs.length != 0){
+      alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
+      e.preventDefault()  
+    }
+
+    // e.preventDefault()
   })
 
 
