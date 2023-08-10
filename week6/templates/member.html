@@ -22,11 +22,13 @@
     </form>
     <hr>
     {% for msg in msgs %}
-      <div class="message" data-id="{{ msg.id }}">
-        <span class="name"> {{ msg.name }}：</span>
-        <span class="content"> {{ msg.content }} </span>
-        <span class="delete">X</span>
-      </div>
+    <div class="message" data-id="{{ msg.id }}">
+      <span class="name"> {{ msg.name }}：</span>
+      <span class="content"> {{ msg.content }} </span>
+      {% if msg.name == name %}
+      <span class="delete">X</span>
+      {% endif %}
+    </div>
     {% endfor %}
 
   </div>

@@ -33,6 +33,7 @@ def member():
 @app.route("/error")
 def error():
   errorMsg = request.args.get("message")
+  
   return render_template("error.html", message = errorMsg)
 
 # 處理登入需求
@@ -73,8 +74,8 @@ def signup():
     sql = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
     values = (user_name, user_username, user_password)
     cursor.execute(sql, values)
-    
     db.commit()
+
     return redirect("/")
 
 @app.route("/signout")
@@ -82,7 +83,9 @@ def signout():
   session.pop("name", None)
   session.pop("signed", None)
   session.pop("member_id", None)
+  
   return redirect("/")
+
 @app.route("/createMessage", methods=["POST"])
 def create_message():
   content = request.form.get("content")
@@ -98,10 +101,11 @@ def create_message():
 @app.route("/deleteMessage", methods=["POST"])
 def delete_message():
   delID = int(request.data.decode("utf-8"))
+  
   sql = "DELETE from message where id = %s"
   cursor.execute(sql, (delID,))
-
   db.commit()
+
   return "OK"
 
 
