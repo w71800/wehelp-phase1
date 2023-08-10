@@ -16,7 +16,7 @@ def member():
   if is_signed == False or is_signed == None:
     return redirect("/")
   
-  name = session.get("name")
+  username = session.get("name")
   # 抓取留言資料
   sql = "SELECT message.id, name, content from message LEFT JOIN member ON message.member_id = member.id"
   cursor.execute(sql)
@@ -28,7 +28,7 @@ def member():
     dict = { "id": id, "name": name, "content": content }
     msgs.append(dict)
 
-  return render_template("member.html", name = name, msgs = msgs)
+  return render_template("member.html", name = username, msgs = msgs)
 
 @app.route("/error")
 def error():
@@ -102,9 +102,7 @@ def delete_message():
   cursor.execute(sql, (delID,))
 
   db.commit()
-
-  # return redirect("/member")
-  return "test"
+  return "OK"
 
 
 if __name__ == "__main__":

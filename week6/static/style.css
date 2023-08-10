@@ -77,9 +77,9 @@ a{
 }
 
 .message{
-  border: 1px solid #000;
   text-align: center;
   vertical-align: center;
+  margin-bottom: 5px;
 }
 span.name{
   font-weight: bold;
@@ -90,6 +90,7 @@ span.delete{
   color: white;
   padding: 0px 3px;
   cursor: pointer;
+  margin-left: 10px;
 }
 span.delete:hover{
   background-color: orange;

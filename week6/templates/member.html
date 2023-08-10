@@ -38,19 +38,30 @@
   })
 
   function deleteMessage(){
-    let msgId = this.parentElement.dataset.id
-    console.log(msgId);
+    const yes = confirm("確定要刪除嗎？")
+    console.log(yes);
+    if (yes){
+      let msgId = this.parentElement.dataset.id
+      console.log(msgId);
 
-    fetch("/deleteMessage",{
-      method: "post",
-      headers: {
-        'Content-Type': 'text/plain'
-      },
-      body: msgId.toString()
-    })
-    .then( res => {
-      console.log(res);
-    })
+      fetch("/deleteMessage",{
+        method: "post",
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: msgId.toString()
+      })
+      .then( res =>  res.text() )
+      .then( res => {
+        if(res == "OK"){
+          window.location.href = "/member"
+        }
+      }
+      )
+
+    }
+
+    
   }
 </script>
 </html>
