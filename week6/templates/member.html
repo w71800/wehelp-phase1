@@ -8,7 +8,49 @@
 </head>
 <body>
   <div class="header"> 歡迎光臨，這是會員頁 </div>
-  <p> {{ name }} 歡迎登入系統 </p>
-  <a href="/signout"> 登出系統 </a>
+  <div class="container">
+    <p> {{ name }} 歡迎登入系統 </p>
+    <a href="/signout"> 登出系統 </a>
+    <hr>
+    <p> 快來留言吧！ </p>
+    <form action="/createMessage" method="post">
+      <div class="wrapper">
+        <label for="content"> 內容 </label>
+        <input type="text" name="content" id="content">
+        <input type="submit" value="送出">
+      </div>
+    </form>
+    <hr>
+    {% for msg in msgs %}
+      <div class="message" data-id="{{ msg.id }}">
+        <span class="name"> {{ msg.name }}：</span>
+        <span class="content"> {{ msg.content }} </span>
+        <span class="delete">X</span>
+      </div>
+    {% endfor %}
+
+  </div>
 </body>
+<script>
+  const deleteBtns = document.querySelectorAll(".delete")
+  deleteBtns.forEach(btn => {
+    btn.addEventListener("click", deleteMessage)
+  })
+
+  function deleteMessage(){
+    let msgId = this.parentElement.dataset.id
+    console.log(msgId);
+
+    fetch("/deleteMessage",{
+      method: "post",
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: msgId.toString()
+    })
+    .then( res => {
+      console.log(res);
+    })
+  }
+</script>
 </html>

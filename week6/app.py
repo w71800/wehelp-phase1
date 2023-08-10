@@ -17,7 +17,18 @@ def member():
     return redirect("/")
   
   name = session.get("name")
-  return render_template("member.html", name = name)
+  # 抓取留言資料
+  sql = "SELECT message.id, name, content from message LEFT JOIN member ON message.member_id = member.id"
+  cursor.execute(sql)
+  result = cursor.fetchall()
+  msgs = []
+  
+  for item in result:
+    id, name, content = item
+    dict = { "id": id, "name": name, "content": content }
+    msgs.append(dict)
+
+  return render_template("member.html", name = name, msgs = msgs)
 
 @app.route("/error")
 def error():
@@ -33,20 +44,18 @@ def signin():
   is_exist = check_exist(user_id)
   
   if is_exist:
-    sql = "SELECT name, password FROM member WHERE username = %s"
+    sql = "SELECT name, password, id FROM member WHERE username = %s"
     cursor.execute(sql, (user_id,))
-    name, pwd = cursor.fetchall()[0]
+    name, pwd, member_id = cursor.fetchall()[0]
     if pwd == user_password:
       session["name"] = name
       session["signed"] = True
+      session["member_id"] = member_id
       return redirect("/member")
     else:
       return redirect(url_for("error", message = "帳號或密碼輸入錯誤"))
   else:
     return redirect(url_for("error", message = "帳號或密碼輸入錯誤"))
-  
-  
-  return "test"
 
 # 處理註冊需求
 @app.route("/signup", methods=["POST"])
@@ -72,7 +81,31 @@ def signup():
 def signout():
   session.pop("name", None)
   session.pop("signed", None)
+  session.pop("member_id", None)
   return redirect("/")
+@app.route("/createMessage", methods=["POST"])
+def create_message():
+  content = request.form.get("content")
+  
+  # 需要：member_id, content
+  sql = "INSERT into message(member_id, content) value(%s, %s)"
+  value = (session.get("member_id"), content)
+  cursor.execute(sql, value)
+  db.commit()
+
+  return redirect("/member")
+
+@app.route("/deleteMessage", methods=["POST"])
+def delete_message():
+  delID = int(request.data.decode("utf-8"))
+  sql = "DELETE from message where id = %s"
+  cursor.execute(sql, (delID,))
+
+  db.commit()
+
+  # return redirect("/member")
+  return "test"
+
 
 if __name__ == "__main__":
     app.run(port=3000, debug=True)

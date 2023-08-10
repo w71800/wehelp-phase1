@@ -23,7 +23,8 @@ html, body{
 
 .container{
   width: 40vw;
-  margin: 0 auto
+  margin: 0 auto;
+  padding-bottom: 40px;
 }
 
 /* .container *{
@@ -59,12 +60,10 @@ html, body{
 
 .container [type="submit"]{
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
+  
 }
 
-/* .container [type="submit"]:nth-child(1){
-  margin-bottom: 40px;
-} */
 
 p{
   font-size: 1.5rem;
@@ -75,4 +74,23 @@ a{
   display: block;
   font-size: 1rem;
   text-align: center;
+}
+
+.message{
+  border: 1px solid #000;
+  text-align: center;
+  vertical-align: center;
+}
+span.name{
+  font-weight: bold;
+}
+span.delete{
+  border: 1px solid #000;
+  background-color: #888;
+  color: white;
+  padding: 0px 3px;
+  cursor: pointer;
+}
+span.delete:hover{
+  background-color: orange;
 }

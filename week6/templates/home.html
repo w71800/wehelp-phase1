@@ -54,7 +54,7 @@
         type="password" 
         id="user_password"
         name="user_password"
-        value="0000">
+        value="1234">
     </div>
     <input type="submit" value="登入">
   </form>
@@ -64,17 +64,14 @@
 <script>
   const signup = document.querySelector("#signup")
   const signin = document.querySelector("#signin")
-  signup.addEventListener("submit", e => {
-    const submitName = document.querySelector("#name")
-    const submitId = document.querySelector("#id")
-    const submitPwd = document.querySelector("#password")
+  function checkEmpty(form, e){
+    let rawInputs = [...form.querySelectorAll(".wrapper input")]
     let emptyInputs = []
-    let arr = [ submitName, submitId, submitPwd ]
-    arr = arr.map( el => {
+    let arr = rawInputs.map( el => {
       let { value, id } = el
-
       return { value, id }
     })
+
     // 處理缺項
     for(item of arr) {
       if(item.value == ""){
@@ -83,33 +80,15 @@
     }
     if(emptyInputs.length != 0){
       alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
-      e.preventDefault()  
+      e.preventDefault()
     }
+  }
 
-    // e.preventDefault()
+  signup.addEventListener("submit", e => {
+    checkEmpty(signup, e)
   })
   signin.addEventListener("submit", e => {
-    const submitId = document.querySelector("#user_id")
-    const submitPwd = document.querySelector("#user_password")
-    let emptyInputs = []
-    let arr = [ submitId, submitPwd ]
-    arr = arr.map( el => {
-      let { value, id } = el
-
-      return { value, id }
-    })
-    // 處理缺項
-    for(item of arr) {
-      if(item.value == ""){
-        emptyInputs.push(item.id)
-      }
-    }
-    if(emptyInputs.length != 0){
-      alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
-      e.preventDefault()  
-    }
-
-    // e.preventDefault()
+    checkEmpty(signin, e)
   })
 
 
