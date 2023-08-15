@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignIn Successed!</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+  <div class="header"> 歡迎光臨，這是會員頁 </div>
+  <div class="container">
+    <p> {{ name }} 歡迎登入系統 </p>
+    <a href="/signout"> 登出系統 </a>
+    <hr>
+    <p> 查詢會員姓名 </p>
+    <form action="" id="queryMember">
+      <div class="wrapper">
+        <input 
+          type="text" 
+          name="username" 
+          id="username"
+          placeholder="輸入想查詢的帳號"
+          value="ika"
+          required>
+        <input type="submit" value="查詢">
+      </div>
+    </form>
+    <div class="api_result"></div>
+    <hr>
+    <p> 更新我的姓名 </p>
+    <form action="" id="patchName">
+      <div class="wrapper">
+        <input 
+          type="text" 
+          name="patchName" 
+          id="patchName"
+          value="ika"
+          required>
+        <input type="submit"  value="送出">
+      </div>
+    </form>
+    <div class="apiPatchResult"></div>
+    
+
+  </div>
+</body>
+<script>
+  const queryForm = document.querySelector("form#queryMember")
+  const patchForm = document.querySelector("form#patchName")
+  
+
+  
+  function getData(){
+    let queryStr = `username=${form.querySelector("#username").value}`
+    let url = `api/member?${queryStr}`
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(!res.found){
+        resultDiv.textContent = `抱歉，找無此人`  
+      }else{
+        let { name, username } = res
+        resultDiv.textContent = `${name}(${username})`
+      }
+    })
+  }
+  queryForm.addEventListener("submit", (e)=>{
+    let resultDiv = document.querySelector(".apiQueryResult")
+    e.preventDefault()
+    getData()
+  })
+  
+  patchForm.addEventListener("submit", (e)=>{
+    let resultDiv = document.querySelector(".apiPatchResult")
+    let value = patchForm.querySelector("#patchName").value
+    e.preventDefault()
+    fetch("api/member", {
+      method: "PATCH",
+      header: {
+        "Content-Type": "application/json"
+      },
+      body: {
+        name: value
+      }
+    })
+  })
+
+</script>
+</html>

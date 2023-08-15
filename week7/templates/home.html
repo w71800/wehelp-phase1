@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首頁</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+  <div class="header"> 歡迎光臨，請輸入帳號密碼 </div>
+  <div class="container">
+    <div class="title">註冊帳號</div>
+  <form action="/signup" method="post" id="signup">
+    <div class="wrapper">
+      <label for="name">姓名</label>
+      <input 
+        type="text" 
+        name="name" 
+        id="name" >
+      </div>
+    <div class="wrapper">
+      <label for="id">帳號</label>
+      <input 
+        type="text" 
+        name="id" 
+        id="id" >
+    </div>
+    <div class="wrapper">
+      <label for="password">密碼</label>
+      <input 
+        type="password" 
+        name="password" 
+        id="password" >
+    </div>
+    <input type="submit" value="註冊" > 
+  </form>
+  <hr>
+  <form action="/signin" method="post" id="signin">
+    <div class="title"> 登入系統 </div>
+    <div class="wrapper">
+      <label for="user_id">帳號</label>
+      <input 
+        type="text" 
+        id="user_id"
+        name="user_id">
+    </div>
+    <div class="wrapper">
+      <label for="user_password">密碼</label>
+      <input 
+        type="password" 
+        id="user_password"
+        name="user_password">
+    </div>
+    <input type="submit" value="登入">
+  </form>
+  </div>
+  
+</body>
+<script>
+  const signup = document.querySelector("#signup")
+  const signin = document.querySelector("#signin")
+  function checkEmpty(form, e){
+    let rawInputs = [...form.querySelectorAll(".wrapper input")]
+    let emptyInputs = []
+    let arr = rawInputs.map( el => {
+      let { value, id } = el
+      return { value, id }
+    })
+
+    // 處理缺項
+    for(item of arr) {
+      if(item.value == ""){
+        emptyInputs.push(item.id)
+      }
+    }
+    if(emptyInputs.length != 0){
+      alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
+      e.preventDefault()
+    }
+  }
+
+  signup.addEventListener("submit", e => {
+    checkEmpty(signup, e)
+  })
+  signin.addEventListener("submit", e => {
+    checkEmpty(signin, e)
+  })
+
+
+</script>
+</html>
