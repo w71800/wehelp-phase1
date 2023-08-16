@@ -51,7 +51,8 @@
 
   
   function getData(){
-    let queryStr = `username=${form.querySelector("#username").value}`
+    let resultDiv = document.querySelector(".api_result")
+    let queryStr = `username=${queryForm.querySelector("#username").value}`
     let url = `api/member?${queryStr}`
     fetch(url, {
       method: "GET",
@@ -61,16 +62,11 @@
     })
     .then(res => res.json())
     .then(res => {
-      if(!res.found){
-        resultDiv.textContent = `抱歉，找無此人`  
-      }else{
         let { name, username } = res
         resultDiv.textContent = `${name}(${username})`
-      }
     })
   }
   queryForm.addEventListener("submit", (e)=>{
-    let resultDiv = document.querySelector(".apiQueryResult")
     e.preventDefault()
     getData()
   })
@@ -78,15 +74,26 @@
   patchForm.addEventListener("submit", (e)=>{
     let resultDiv = document.querySelector(".apiPatchResult")
     let value = patchForm.querySelector("#patchName").value
+    console.log(value);
     e.preventDefault()
     fetch("api/member", {
       method: "PATCH",
-      header: {
+      headers: {
         "Content-Type": "application/json"
       },
-      body: {
-        name: value
+      body: JSON.stringify({name: value})
+    })
+    .then( res => res.json() )
+    .then( res => {
+      if(res.error){
+        alert("存取遭拒")
+      }else{
+        resultDiv.textContent = "更新成功"
+        let nameDiv = document.querySelector(".container>p")
+        nameDiv.textContent = `${ value } 歡迎登入系統`
       }
+
+      patchForm.querySelector("#patchName").value = ""
     })
   })
 

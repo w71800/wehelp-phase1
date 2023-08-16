@@ -96,7 +96,7 @@ span.delete:hover{
   background-color: orange;
 }
 
-.api_result{
+.api_result, .apiPatchResult{
   text-align: center;
   font-weight: bold;
 }

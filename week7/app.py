@@ -111,9 +111,17 @@ def delete_message():
 @app.route("/api/member", methods=["GET", "PATCH"])
 def api_member():
   if request.method == "PATCH":
-    print(request.data.decode("utf-8")[0])
+    if session.get("signed") in [False, None]:
+      return jsonify({ "error": True })
+    else:
+      new_name = request.json["name"]
+      member_id = session["member_id"]
+      sql = "UPDATE member SET name = (%s) where id = (%s)"
+      cursor.execute(sql, (new_name, member_id))
+      db.commit()
+      session["name"] = new_name
 
-    return "test"
+    return jsonify({ "ok": True })
 
   if request.method == "GET":
     if session.get("signed") in [False, None]:
@@ -124,10 +132,10 @@ def api_member():
       cursor.execute(sql, (query, ))
       result = cursor.fetchall()
       if len(result) == 0:
-        return jsonify({ "id": None, "name": None, "username": None, "found": False })
+        return jsonify({ "id": None, "name": None, "username": None })
       else:
         id, name, username = result[0]
-        return jsonify({ "id": id, "name": name, "username": username, "found": True })
+        return jsonify({ "id": id, "name": name, "username": username })
 
 
 
