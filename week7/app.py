@@ -110,32 +110,38 @@ def delete_message():
 
 @app.route("/api/member", methods=["GET", "PATCH"])
 def api_member():
-  if request.method == "PATCH":
-    if session.get("signed") in [False, None]:
-      return jsonify({ "error": True })
-    else:
+  method = request.method
+  response = None
+
+  if session.get("signed") in [False, None]:
+    response = jsonify({ "data": None }) if method == "GET" else jsonify({ "error": True })
+    return response
+  else:
+    if method == "PATCH":
       new_name = request.json["name"]
       member_id = session["member_id"]
+
       sql = "UPDATE member SET name = (%s) where id = (%s)"
       cursor.execute(sql, (new_name, member_id))
       db.commit()
+    
       session["name"] = new_name
+      response = jsonify({ "ok": True })
+      return response
 
-    return jsonify({ "ok": True })
-
-  if request.method == "GET":
-    if session.get("signed") in [False, None]:
-      return jsonify({ "data": None })
-    else:
+    if method == "GET":
       query = request.args.get("username")
-      sql = "SELECT id, name, username from member WHERE username = (%s);"
+      sql = "SELECT id, name, username from member where username = (%s);"
       cursor.execute(sql, (query, ))
+      
       result = cursor.fetchall()
       if len(result) == 0:
-        return jsonify({ "id": None, "name": None, "username": None })
+        response = jsonify({ "id": None, "name": None, "username": None })
       else:
         id, name, username = result[0]
-        return jsonify({ "id": id, "name": name, "username": username })
+        response = jsonify({ "id": id, "name": name, "username": username })
+      
+      return response
 
 
 

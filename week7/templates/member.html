@@ -52,30 +52,33 @@
   
   function getData(){
     let resultDiv = document.querySelector(".api_result")
-    let queryStr = `username=${queryForm.querySelector("#username").value}`
-    let url = `api/member?${queryStr}`
+    let url = `api/member?username=${queryForm.querySelector("#username").value}`
+
     fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       },
     })
-    .then(res => res.json())
-    .then(res => {
+    .then( res => res.json() )
+    .then( res => {
+      resultDiv.textContent = `搜尋中...`
+      setTimeout(()=>{
         let { name, username } = res
         resultDiv.textContent = `${name}(${username})`
+      }, 300)
     })
   }
-  queryForm.addEventListener("submit", (e)=>{
+  queryForm.addEventListener("submit", e => {
     e.preventDefault()
     getData()
   })
   
   patchForm.addEventListener("submit", (e)=>{
-    let resultDiv = document.querySelector(".apiPatchResult")
-    let value = patchForm.querySelector("#patchName").value
-    console.log(value);
     e.preventDefault()
+    let resultDiv = document.querySelector(".apiPatchResult")
+    let nameDiv = document.querySelector(".container>p")
+    let value = patchForm.querySelector("#patchName").value
     fetch("api/member", {
       method: "PATCH",
       headers: {
@@ -89,7 +92,6 @@
         alert("存取遭拒")
       }else{
         resultDiv.textContent = "更新成功"
-        let nameDiv = document.querySelector(".container>p")
         nameDiv.textContent = `${ value } 歡迎登入系統`
       }
 
