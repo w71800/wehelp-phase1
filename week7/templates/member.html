@@ -52,7 +52,7 @@
   
   function getData(){
     let resultDiv = document.querySelector(".api_result")
-    let url = `api/member?username=${queryForm.querySelector("#username").value}`
+    let url = `api/member?username=${ queryForm.querySelector("#username").value }`
 
     fetch(url, {
       method: "GET",
@@ -65,7 +65,7 @@
       resultDiv.textContent = `搜尋中...`
       setTimeout(()=>{
         let { name, username } = res
-        resultDiv.textContent = `${name}(${username})`
+        resultDiv.textContent = `${ name }(${ username })`
       }, 300)
     })
   }
@@ -84,7 +84,7 @@
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({name: value})
+      body: JSON.stringify({ name: value })
     })
     .then( res => res.json() )
     .then( res => {
