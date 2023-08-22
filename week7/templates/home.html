@@ -56,7 +56,9 @@
   </div>
   
 </body>
+<script src="{{ url_for('static', filename='dataValidator.js') }}"></script>
 <script>
+
   const signup = document.querySelector("#signup")
   const signin = document.querySelector("#signin")
   function checkEmpty(form, e){
@@ -72,13 +74,16 @@
       if(item.value == ""){
         emptyInputs.push(item.id)
       }
+      if(!formatIsOk(item.value)){
+        e.preventDefault()
+        return alert("請輸入正確格式")
+      }
     }
     if(emptyInputs.length != 0){
       alert(`有 ${emptyInputs.join("、")} 沒有填寫`)
       e.preventDefault()
     }
   }
-
   signup.addEventListener("submit", e => {
     checkEmpty(signup, e)
   })

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from db_manufactor import db, cursor, check_exist
+from data_validator import formatIsOk, hasSpace
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -13,7 +14,7 @@ def home():
 def member():
   is_signed = session.get("signed")
 
-  if is_signed == False or is_signed == None:
+  if is_signed in [ None, False ]:
     return redirect("/")
   
   username = session.get("name")
@@ -120,7 +121,13 @@ def api_member():
     if method == "PATCH":
       new_name = request.json["name"]
       member_id = session["member_id"]
+      
+      ### 錯誤格式驗證：如果是空的話 ###
+      if hasSpace(new_name):
+        response = jsonify({ "error": True, "message": "The format of input is unvalid"})
 
+        return response
+      ##############################
       sql = "UPDATE member SET name = (%s) where id = (%s)"
       cursor.execute(sql, (new_name, member_id))
       db.commit()
@@ -131,6 +138,14 @@ def api_member():
 
     if method == "GET":
       query = request.args.get("username")
+
+      ### 錯誤格式驗證：如果是空的話 ###
+      if hasSpace(query):
+        response = jsonify({ "error": True, "message": "The format of input is unvalid" })
+
+        return response
+      ##############################
+
       sql = "SELECT id, name, username from member where username = (%s);"
       cursor.execute(sql, (query, ))
       

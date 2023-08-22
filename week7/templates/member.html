@@ -20,8 +20,7 @@
           name="username" 
           id="username"
           placeholder="輸入想查詢的帳號"
-          value="ika"
-          required>
+          value="ika">
         <input type="submit" value="查詢">
       </div>
     </form>
@@ -34,8 +33,7 @@
           type="text" 
           name="patchName" 
           id="patchName"
-          value="ika"
-          required>
+          value="ika">
         <input type="submit"  value="送出">
       </div>
     </form>
@@ -44,6 +42,7 @@
 
   </div>
 </body>
+<script src="{{ url_for('static', filename='dataValidator.js') }}"></script>
 <script>
   const queryForm = document.querySelector("form#queryMember")
   const patchForm = document.querySelector("form#patchName")
@@ -52,8 +51,12 @@
   
   function getData(){
     let resultDiv = document.querySelector(".api_result")
-    let url = `api/member?username=${ queryForm.querySelector("#username").value }`
+    let value = queryForm.querySelector("#username").value
+    let url = `api/member?username=${ value }`
 
+    if(hasSpace(value)){
+      return alert("請勿留白")
+    }
     fetch(url, {
       method: "GET",
       headers: {
@@ -79,6 +82,11 @@
     let resultDiv = document.querySelector(".apiPatchResult")
     let nameDiv = document.querySelector(".container>p")
     let value = patchForm.querySelector("#patchName").value
+
+
+    if(hasSpace(value)){
+      return alert("請勿留白")
+    }
     fetch("api/member", {
       method: "PATCH",
       headers: {
@@ -89,7 +97,8 @@
     .then( res => res.json() )
     .then( res => {
       if(res.error){
-        alert("存取遭拒")
+        alert(`存取遭拒，因為 ${res.message}`)
+        resultDiv.textContent = `更新失敗`
       }else{
         resultDiv.textContent = "更新成功"
         nameDiv.textContent = `${ value } 歡迎登入系統`
