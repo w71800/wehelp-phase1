@@ -3,6 +3,7 @@ from db_manufactor import db, cursor, check_exist
 from data_validator import formatIsOk, hasSpace
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
 app.secret_key = "secret"
 
 
@@ -109,14 +110,37 @@ def delete_message():
 
   return "OK"
 
-@app.route("/api/member", methods=["GET", "PATCH"])
-def api_member():
+@app.route("/api/member/<id>")
+def restful_api_member(id):
   method = request.method
   response = None
-
   if session.get("signed") in [False, None]:
     response = jsonify({ "data": None }) if method == "GET" else jsonify({ "error": True })
     return response
+  else:
+    # 以 restful API 形式透過 id 存取
+    if id is not None:
+      sql = "SELECT id, name, username from member where id = (%s);"
+      cursor.execute(sql, (id, ))
+      result = cursor.fetchall()
+    
+    if len(result) == 0:
+      response = jsonify({ "id": None, "name": None, "username": None })
+    else:
+      id, name, username = result[0]
+      response = jsonify({ "id": id, "name": name, "username": username })
+    
+    return response
+
+# 處理靜態路由
+@app.route("/api/member", methods = ["GET", "PATCH"])
+def api_member():
+  method = request.method
+  if session.get("signed") in [False, None]:
+    response = jsonify({ "data": None }) if method == "GET" else jsonify({ "error": True })
+
+    return response
+
   else:
     if method == "PATCH":
       new_name = request.json["name"]
@@ -134,30 +158,31 @@ def api_member():
     
       session["name"] = new_name
       response = jsonify({ "ok": True })
-      return response
 
+      return response
+    
     if method == "GET":
       query = request.args.get("username")
+      if query is not None:
+        ### 錯誤格式驗證：如果是整坨有空白的話 ###
+        if hasSpace(query):
+          response = jsonify({ "error": True, "message": "The format of input is unvalid" })
 
-      ### 錯誤格式驗證：如果是空的話 ###
-      if hasSpace(query):
-        response = jsonify({ "error": True, "message": "The format of input is unvalid" })
-
-        return response
-      ##############################
-
-      sql = "SELECT id, name, username from member where username = (%s);"
-      cursor.execute(sql, (query, ))
-      
-      result = cursor.fetchall()
-      if len(result) == 0:
-        response = jsonify({ "id": None, "name": None, "username": None })
+          return response
+        ##############################
+        sql = "SELECT id, name, username from member where username = (%s);"
+        cursor.execute(sql, (query, ))
+        result = cursor.fetchall()
+            
+        if len(result) == 0:
+          response = jsonify({ "id": None, "name": None, "username": None })
+        else:
+          id, name, username = result[0]
+          response = jsonify({ "id": id, "name": name, "username": username })
       else:
-        id, name, username = result[0]
-        response = jsonify({ "id": id, "name": name, "username": username })
-      
+        response = jsonify({ "error": True, "message": "There's no query string" })
+  
       return response
-
 
 
 

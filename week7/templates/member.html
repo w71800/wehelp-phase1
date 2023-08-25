@@ -70,6 +70,8 @@
         let { name, username } = res
         resultDiv.textContent = `${ name }(${ username })`
       }, 300)
+    }).catch( msg =>{
+      console.log(msg);
     })
   }
   queryForm.addEventListener("submit", e => {
